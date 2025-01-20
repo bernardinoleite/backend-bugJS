@@ -3,6 +3,7 @@ import { User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 import { Repository } from "typeorm";
 import { appDataSource } from "../../../../../ormConfig";
+import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 
 export class UserRepository implements IUserRepository {
 
@@ -10,6 +11,11 @@ export class UserRepository implements IUserRepository {
 
     constructor() {
         this.repository = appDataSource.getRepository(User)
+    }
+    async update(user: User): Promise<User> {
+
+        const updatedUser = await this.repository.save(user)
+        return updatedUser
     }
 
     async create({ username, email, password }: ICreateUserDTO): Promise<void> {
