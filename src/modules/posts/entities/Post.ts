@@ -30,16 +30,16 @@ export class Post {
     error: string
 
     @Column({ nullable: true })
-    code_error: string
+    code_error?: string
 
     @Column({ nullable: true })
-    description: string
+    description?: string
 
     @Column({ nullable: true })
-    solution: string
+    solution?: string
 
     @Column({ nullable: true })
-    file: string
+    file?: string
 
     @CreateDateColumn()
     created_at?: Date
