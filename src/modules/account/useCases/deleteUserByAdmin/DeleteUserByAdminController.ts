@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import { DeleteUserUseCase } from "./DeleteUserUseCase";
+import { DeleteUserByAdminUseCase } from "./DeleteUserByAdminUseCase";
 
-export class DeleteUserController {
+export class DeleteUserByAdminController {
 
 
-    constructor(private deleteUserUseCase: DeleteUserUseCase) { }
+    constructor(private deleteUserByAdminUseCase: DeleteUserByAdminUseCase) { }
 
     async handle(request: Request, response: Response): Promise<Response> {
 
         const { id } = request.params
-        await this.deleteUserUseCase.execute(id)
+        await this.deleteUserByAdminUseCase.execute(id)
 
         return response.status(200).json({
             status: 200,

@@ -3,7 +3,7 @@ import { createUserController } from "../modules/account/useCases/createUser";
 import { authenticateUserController } from "../modules/account/useCases/authenticateUser";
 import { updateUserController } from "../modules/account/useCases/updateUser";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
-import { deleteUserController } from "../modules/account/useCases/deleteUser";
+import { deleteUserByAdminController } from "../modules/account/useCases/deleteUserByAdmin";
 import { adminMiddleware } from "../middlewares/adminMiddleware";
 import { updateUserAvatarController } from "../modules/account/useCases/updateUserAvatar";
 import { listUserController } from "../modules/account/useCases/listUser";
@@ -32,7 +32,7 @@ usersRouter.get("/me", ensureAuthenticated, (request, response) => {
 })
 
 usersRouter.delete("/:id", ensureAuthenticated, adminMiddleware, (request, response) => {
-    deleteUserController.handle(request, response)
+    deleteUserByAdminController.handle(request, response)
 })
 
 usersRouter.post("/auth", (request, response) => {

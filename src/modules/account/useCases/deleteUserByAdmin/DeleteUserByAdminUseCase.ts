@@ -2,7 +2,7 @@ import { AppError } from "../../../../shared/errors/AppError";
 import { UserRepository } from "../../repositories/implementations/UserRepository";
 
 
-export class DeleteUserUseCase {
+export class DeleteUserByAdminUseCase {
     constructor(private userRepository: UserRepository) {
 
     }
