@@ -11,6 +11,7 @@ const usersRouter = Router()
 
 import multer = require("multer");
 import upload from "../shared/config/multer";
+import { listUserController } from "../modules/account/useCases/listUser";
 
 const uploadMulter = multer(upload.upload("./static/avatar"))
 
@@ -24,6 +25,10 @@ usersRouter.put("/me", ensureAuthenticated, (request, response) => {
 
 usersRouter.patch("/me/avatar", ensureAuthenticated, uploadMulter.single("avatar"), (request, response) => {
     updateUserAvatarController.handle(request, response)
+})
+
+usersRouter.get("/me", ensureAuthenticated, (request, response) => {
+    listUserController.handle(request, response)
 })
 
 usersRouter.delete("/:id", ensureAuthenticated, adminMiddleware, (request, response) => {
