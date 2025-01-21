@@ -5,7 +5,7 @@ export function adminMiddleware(request: Request, response: Response, next: Next
 
     const { role } = request.user
     if (role !== true) {
-        throw new AppError("unauthorized", 400)
+        throw new AppError("unauthorized", 403)
     }
     next()
 }

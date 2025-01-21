@@ -3,7 +3,6 @@ import { AppError } from "../../../../shared/errors/AppError";
 import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 import { IUserRepository } from "../../repositories/IUserRepository";
 
-
 interface IReturn {
     id?: string
     username: string
@@ -12,12 +11,13 @@ interface IReturn {
     is_admin: boolean
     created_at: Date
 }
-export class UpdateUserUseCase {
+
+export class UpdateUserByAdminUseCase {
+
 
     constructor(private userRepository: IUserRepository) {
 
     }
-
 
     async execute(user: IUpdateUserDTO): Promise<IReturn> {
 
@@ -26,7 +26,6 @@ export class UpdateUserUseCase {
         if (!userAlreadyExists) {
             throw new AppError("User does not exists")
         }
-
         if (user.password) {
             const passwordHash = await hash(user.password, 8)
             user.password = passwordHash

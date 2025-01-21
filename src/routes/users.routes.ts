@@ -6,12 +6,12 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { deleteUserController } from "../modules/account/useCases/deleteUser";
 import { adminMiddleware } from "../middlewares/adminMiddleware";
 import { updateUserAvatarController } from "../modules/account/useCases/updateUserAvatar";
-
-const usersRouter = Router()
-
+import { listUserController } from "../modules/account/useCases/listUser";
 import multer = require("multer");
 import upload from "../shared/config/multer";
-import { listUserController } from "../modules/account/useCases/listUser";
+import { updateUserByAdminController } from "../modules/account/useCases/updateUserByAdmin";
+
+const usersRouter = Router()
 
 const uploadMulter = multer(upload.upload("./static/avatar"))
 
@@ -37,6 +37,10 @@ usersRouter.delete("/:id", ensureAuthenticated, adminMiddleware, (request, respo
 
 usersRouter.post("/auth", (request, response) => {
     authenticateUserController.handle(request, response)
+})
+
+usersRouter.put("/:id", ensureAuthenticated, adminMiddleware, (request, response) => {
+    updateUserByAdminController.handle(request, response)
 })
 
 export {

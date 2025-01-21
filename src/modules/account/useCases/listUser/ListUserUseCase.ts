@@ -24,7 +24,7 @@ export class ListUserUseCase {
         if (!user) {
             throw new AppError("User does not exists")
         }
-        // delete user.password  <--- essa e uma forma mas a que esta a baixo é bem mais senior
+        // delete user.password  <--- essa é uma forma mas a que está a baixo é bem mais senior
         const { password, ...userWithouPassword } = user
         return userWithouPassword
     }
