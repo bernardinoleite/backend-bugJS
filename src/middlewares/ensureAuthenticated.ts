@@ -4,7 +4,7 @@ import { verify } from "jsonwebtoken";
 import { AppError } from "../shared/errors/AppError";
 import { UserRepository } from "../modules/account/repositories/implementations/UserRepository";
 
-export async function ensureAthenticated(request: Request, response: Response, next: NextFunction) {
+export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
 
     const authHeader = request.headers.authorization
 
@@ -21,7 +21,8 @@ export async function ensureAthenticated(request: Request, response: Response, n
             throw new AppError("User does not exists")
         }
         request.user = {
-            id: String(user_id)
+            id: String(user_id),
+            role: Boolean(userAlreadyExists.is_admin)
         }
         next()
     } catch (error) {

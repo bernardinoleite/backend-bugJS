@@ -6,7 +6,10 @@ import { sign } from "jsonwebtoken"
 interface IResponseToken {
     user: {
         email: string,
-        username: string
+        username: string,
+        id: string,
+        role: boolean,
+        avatar: string
     },
     token: string
 
@@ -35,8 +38,11 @@ export class AuthenticateUserUseCase {
 
         const responseToken: IResponseToken = {
             user: {
+                id: user.id,
                 email: user.email,
-                username: user.username
+                username: user.username,
+                avatar: user.avatar,
+                role: user.is_admin
             },
             token
         }

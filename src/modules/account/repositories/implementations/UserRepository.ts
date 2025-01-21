@@ -12,6 +12,11 @@ export class UserRepository implements IUserRepository {
     constructor() {
         this.repository = appDataSource.getRepository(User)
     }
+
+    async delete(id: string): Promise<void> {
+        await this.repository.delete({ id })
+    }
+
     async update(user: User): Promise<User> {
 
         const updatedUser = await this.repository.save(user)
