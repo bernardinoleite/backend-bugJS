@@ -7,7 +7,6 @@ const router = Router()
 router.use("/users", usersRouter)
 router.use("/posts", postRouter)
 
-
 export {
     router
 }

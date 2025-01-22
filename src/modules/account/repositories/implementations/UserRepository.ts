@@ -13,6 +13,11 @@ export class UserRepository implements IUserRepository {
         this.repository = appDataSource.getRepository(User)
     }
 
+    async countUsers(): Promise<Number> {
+        const usersCounted = await this.repository.count()
+        return usersCounted
+    }
+
     async delete(id: string): Promise<void> {
         await this.repository.delete({ id })
     }

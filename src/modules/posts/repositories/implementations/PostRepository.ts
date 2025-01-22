@@ -2,7 +2,8 @@ import { ICreatePostDTO } from "../../dtos/ICreatePostDTO";
 import { Post } from "../../entities/Post";
 import { IPostRepository } from "../IPostRepository";
 import { appDataSource } from "../../../../../ormConfig";
-import { Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
+import { IFindPostByErrorDTO } from "../../dtos/IFindPostByErrorDTO";
 
 export class PostRepository implements IPostRepository {
 
@@ -10,16 +11,55 @@ export class PostRepository implements IPostRepository {
     constructor() {
         this.repository = appDataSource.getRepository(Post)
     }
-    async create({ id_user, error, code_error, description, solution, file }: ICreatePostDTO): Promise<Post> {
+    async delete(id: string): Promise<void> {
+        await this.repository.delete({ id })
+    }
+    async countPosts(): Promise<Number> {
+        const postsCounted = await this.repository.count()
+        return postsCounted
+    }
 
-        const post = this.repository.create({ id_user, error, code_error, description, solution, file })
+    async findPostByError({ error, code_error }: IFindPostByErrorDTO): Promise<Post[]> {
 
-        const postCreated = await this.repository.save(post)
+        const whereClause: any = {}
 
-        return postCreated
+        if (error !== 'undefined') {
+            whereClause.error = ILike(`%${error}%`)
+        }
+
+        if (code_error !== undefined) {
+            whereClause.code_error = code_error
+        }
+
+        const posts = await this.repository.find({
+            where: whereClause,
+            relations: ["user"],
+            order: { created_at: "DESC" }
+        })
+        // const posts = await this.repository.find({
+        //     where: {
+        //         error: ILike(`%${error}%`),
+        //         code_error: code_error
+        //     },
+        //     relations: ["user"]
+        //     ,
+        //     order: { created_at: "DESC" }
+
+        // })
+        return posts
     }
 
 
+    async listAllPosts(): Promise<Post[]> {
+        const posts = await this.repository.find({ relations: ["user"] })
+        return posts
+    }
 
+    async create({ id_user, error, code_error, description, solution, file }: ICreatePostDTO): Promise<Post> {
 
+        const post = this.repository.create({ id_user, error, code_error, description, solution, file })
+        const postCreated = await this.repository.save(post)
+        return postCreated
+
+    }
 }
