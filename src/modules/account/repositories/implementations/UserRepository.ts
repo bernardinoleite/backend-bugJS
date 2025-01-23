@@ -3,7 +3,6 @@ import { User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 import { Repository } from "typeorm";
 import { appDataSource } from "../../../../../ormConfig";
-import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 
 export class UserRepository implements IUserRepository {
 
@@ -43,7 +42,11 @@ export class UserRepository implements IUserRepository {
     }
     async findById(id: string): Promise<User> {
 
-        const user = await this.repository.findOneBy({ id })
+        const user = await this.repository.findOne({
+            where: { id },
+            relations: ["posts"],
+            order: { created_at: "DESC" }
+        })
         return user
 
     }

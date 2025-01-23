@@ -9,5 +9,6 @@ export interface IPostRepository {
     listAllPosts(): Promise<Post[]>
     findPostByError({ error, code_error }: IFindPostByErrorDTO): Promise<Post[]>
     countPosts(): Promise<Number>
+    findPostById(id: string): Promise<Post>
     delete(id: string): Promise<void>
 }

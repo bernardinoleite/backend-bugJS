@@ -10,6 +10,7 @@ import { listUserController } from "../modules/account/useCases/listUser";
 import multer = require("multer");
 import upload from "../shared/config/multer";
 import { updateUserByAdminController } from "../modules/account/useCases/updateUserByAdmin";
+import { countAllUserController } from "../modules/account/useCases/countAllUsers";
 
 const usersRouter = Router()
 
@@ -41,6 +42,9 @@ usersRouter.post("/auth", (request, response) => {
 
 usersRouter.put("/:id", ensureAuthenticated, adminMiddleware, (request, response) => {
     updateUserByAdminController.handle(request, response)
+})
+usersRouter.get("/count", ensureAuthenticated, adminMiddleware, (request, response) => {
+    countAllUserController.handle(request, response)
 })
 
 export {

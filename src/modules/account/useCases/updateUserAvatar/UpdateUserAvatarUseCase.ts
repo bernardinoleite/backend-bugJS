@@ -24,8 +24,6 @@ export class UpdateUserAvatarUseCase {
         const user = await this.userRepository.findById(id)
 
         if (user.avatar) {
-            console.log(user.avatar);
-
             const file = new File()
             await file.delete(`./static/avatar/${user.avatar}`)
         }

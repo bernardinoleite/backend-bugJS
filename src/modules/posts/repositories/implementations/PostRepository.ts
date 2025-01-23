@@ -11,9 +11,15 @@ export class PostRepository implements IPostRepository {
     constructor() {
         this.repository = appDataSource.getRepository(Post)
     }
+
     async delete(id: string): Promise<void> {
         await this.repository.delete({ id })
     }
+    async findPostById(id: string): Promise<Post> {
+        const post = await this.repository.findOneBy({ id })
+        return post
+    }
+
     async countPosts(): Promise<Number> {
         const postsCounted = await this.repository.count()
         return postsCounted
@@ -55,9 +61,11 @@ export class PostRepository implements IPostRepository {
         return posts
     }
 
-    async create({ id_user, error, code_error, description, solution, file }: ICreatePostDTO): Promise<Post> {
+    async create(data: ICreatePostDTO): Promise<Post> {
 
-        const post = this.repository.create({ id_user, error, code_error, description, solution, file })
+
+        const post = this.repository.create(data)
+
         const postCreated = await this.repository.save(post)
         return postCreated
 

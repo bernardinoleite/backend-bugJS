@@ -3,11 +3,12 @@ import { PostRepository } from "../../repositories/implementations/PostRepositor
 import markdown from "markdown-it"
 import { resolve } from "path"
 import { readFileSync } from "fs"
+import { IPostRepository } from "../../repositories/IPostRepository";
 const mark = markdown()
 
 export class ListAllPostsUseCase {
 
-    constructor(private postRepository: PostRepository) {
+    constructor(private postRepository: IPostRepository) {
 
     }
 

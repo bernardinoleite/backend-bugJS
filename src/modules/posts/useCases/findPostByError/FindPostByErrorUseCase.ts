@@ -1,10 +1,11 @@
 import { IFindPostByErrorDTO } from "../../dtos/IFindPostByErrorDTO";
 import { Post } from "../../entities/Post";
 import { PostRepository } from "../../repositories/implementations/PostRepository";
+import { IPostRepository } from "../../repositories/IPostRepository";
 
 
 export class FindPostByErrorUseCase {
-    constructor(private postRepository: PostRepository) {
+    constructor(private postRepository: IPostRepository) {
 
     }
 
